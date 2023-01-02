@@ -1,0 +1,8 @@
+{% extends 'shopapp/base.html' %}
+
+{% block content %}
+<a href="{% url 'shop:book_list' %}">Back to Book list</a><br>
+<p> Book id: {{book.id}}</p>
+<p> Book title: {{book.title}}</p>
+<p> Quantity: {{book.quantity}}</p>
+{% endblock %}
