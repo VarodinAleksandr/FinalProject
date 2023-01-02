@@ -6,7 +6,7 @@
 <table class="table table-striped">
   <tr>
     <th>Book id</th>
-    <th>Book title</th>
+    <th>Book name</th>
       <th>Book price</th>
       <th>Book quantity</th>
       <th></th>
@@ -14,7 +14,7 @@
 {% for p in object_list %}
     <tr>
     <th>{{p.id}}</th>
-    <th>{{p.title}}</th>
+    <th>{{p.name}}</th>
     <th>{{p.price}}</th>
         <th>{{p.quantity}}</th>
         <th><button type="button" class="btn btn-warning"><a href="{% url 'shop:book_detail' p.id %}" >Book detail</a></button></th>

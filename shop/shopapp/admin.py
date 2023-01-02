@@ -4,9 +4,9 @@ from .models import Book, Order, OrderItem
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'price', 'quantity']
-    search_fields = ['title']
-    fields = ['title', 'price', 'quantity', 'id_in_store']
+    list_display = ['name', 'price', 'quantity']
+    search_fields = ['name']
+    fields = ['name', 'price', 'quantity', 'id_in_store', 'image']
 
 
 class OrderItemInline(admin.TabularInline):

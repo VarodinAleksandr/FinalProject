@@ -10,7 +10,9 @@
 <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
+{% load cart_tag %}
 <br>
+<button type="button" class="btn btn-warning"><a href="{% url 'shop:cart_detail' %}" >Cart {{request.session.cart|length}}</a></button>
 {% block content %}
 {% endblock %}
 </body>

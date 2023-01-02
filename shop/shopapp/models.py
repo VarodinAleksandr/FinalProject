@@ -1,15 +1,17 @@
 from django.contrib.auth.models import User
 from django.db import models
+from cart.cart import Cart
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=300)
+    name = models.CharField(max_length=300)
     price = models.FloatField()
     quantity = models.IntegerField()
     id_in_store = models.IntegerField()
+    image = models.ImageField(upload_to='products/', null=True, blank=True)
 
     def __str__(self):
-        return f'book with id {self.id}, title:{self.title}, quantity:{self.quantity}'
+        return f'book with id {self.id}, title:{self.name}, quantity:{self.quantity}'
 
 
 class Order(models.Model):
@@ -38,3 +40,7 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f'order item for order {self.order.id}'
+
+
+
+

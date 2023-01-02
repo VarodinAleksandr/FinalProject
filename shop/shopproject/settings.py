@@ -50,7 +50,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'shopapp',
+    'cart',
 ]
+
+CART_SESSION_ID = 'cart'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processor.cart_total_amount',
             ],
         },
     },

@@ -24,3 +24,7 @@ class SignUpForm(UserCreationForm):
             'password1',
             'password2',
             ]
+
+
+class OrderForm(forms.Form):
+    delivery_adress = forms.CharField(max_length=1000)

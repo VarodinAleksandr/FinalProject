@@ -3,6 +3,7 @@
 {% block content %}
 <a href="{% url 'shop:book_list' %}">Back to Book list</a><br>
 <p> Book id: {{book.id}}</p>
-<p> Book title: {{book.title}}</p>
+<p> Book title: {{book.name}}</p>
 <p> Quantity: {{book.quantity}}</p>
+<button type="button" class="btn btn-warning"><a href="{% url 'shop:cart_add' book.id %}" >Add to cart</a></button>
 {% endblock %}
