@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
     'shopapp',
     'cart',
+    'rest_framework',
 ]
 
 CART_SESSION_ID = 'cart'
