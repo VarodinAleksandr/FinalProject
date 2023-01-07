@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (BooKListView, BookDetailView, LoginView, SignUpView, cart_add,
-                    item_clear, item_increment, item_decrement, cart_clear, cart_detail, create_order)
+                    item_clear, item_increment, item_decrement, cart_clear, cart_detail, create_order, OrderList)
 
 app_name = 'shop'
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     path('', BooKListView.as_view(), name='book_list'),
     path('<int:pk>/', BookDetailView.as_view(), name='book_detail'),
     path('signup/', SignUpView.as_view(), name='signup'),
+    path('orders/', OrderList.as_view(), name='order_list'),
 
     # Cart
     path('cart/add/<int:id>/', cart_add, name='cart_add'),

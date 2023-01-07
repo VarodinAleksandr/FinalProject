@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 
 from django.views import generic
-from rest_framework import generics
+from rest_framework import generics as rest_genetic
 
 from .models import Book, Order, OrderItem
 
@@ -12,6 +12,8 @@ from .forms import SignUpForm, OrderForm
 
 from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
+
+from .serializer import OrderSerializer
 
 
 class BooKListView(generic.ListView):
@@ -101,16 +103,9 @@ def cart_detail(request):
     return render(request, 'shopapp/cart_detail.html')
 
 
-#
-# class OrderList(generics.ListAPIView):
-#     serializer_class = BookSerializer
-#     model = Book
-#
-#     def get_queryset(self):
-#         return Book.objects.all()
-#
-#
-#
-#
+class OrderList(rest_genetic.ListAPIView):
+    serializer_class = OrderSerializer
+    model = Order
 
-
+    def get_queryset(self):
+        return Order.objects.all()
