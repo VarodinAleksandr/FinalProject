@@ -1,8 +1,10 @@
 import requests
+from celery import shared_task
 
 from .models import Book
 
 
+@shared_task
 def sync_books():
     r = requests.get('http://127.0.0.1:8001/')
     if r.status_code == 200:

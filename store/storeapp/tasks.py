@@ -1,8 +1,10 @@
 import requests
+from celery import shared_task
 
 from .models import Order, OrderItem, Book
 
 
+@shared_task
 def sync_orders():
     r = requests.get('http://127.0.0.1:8000/orders/')
     if r.status_code == 200:
