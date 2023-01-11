@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
-from cart.cart import Cart
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Book(models.Model):
@@ -33,6 +34,14 @@ class Order(models.Model):
         return f'order for user {self.user}, with status {self.status}'
 
 
+@receiver(post_save, sender=Order)
+def new_order_notification(instance, created, **kwargs):
+    from .tasks import send_mail_to_user
+    if created:
+        useremail = instance.user.email
+        send_mail_to_user.apply_async(args=(useremail, instance.id,))
+
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='order_item', on_delete=models.CASCADE, null=True, blank=True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, blank=True)
@@ -40,7 +49,3 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f'order item for order {self.order.id}'
-
-
-
-

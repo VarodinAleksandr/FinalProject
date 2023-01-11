@@ -153,3 +153,7 @@ CELERY_BEAT_SCHEDULE = {
         'args': (),
     },
 }
+
+
+EMAIL_HOST = '127.0.0.1'
+EMAIL_PORT = '1025'
