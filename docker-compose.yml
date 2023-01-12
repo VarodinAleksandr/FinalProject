@@ -1,0 +1,70 @@
+version: "3"
+
+services:
+  shop:
+    container_name: shop
+    build:
+      context: .
+      dockerfile: shop.Dockerfile
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    networks:
+      - shop_db_net
+    depends_on:
+      - db_shop
+    volumes:
+      - ./shop:/app
+    command: sh runserver.sh
+
+  store:
+    container_name: store
+    build:
+      context: .
+      dockerfile: store.Dockerfile
+    ports:
+      - 8001:8000
+    networks:
+      - store_db_net
+    depends_on:
+      - db_store
+    volumes:
+      - ./store:/app
+    command: sh runserver.sh
+
+  db_shop:
+    container_name: db_shop
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: 'alex'
+      POSTGRES_PASSWORD: 'admin'
+      POSTGRES_DB: 'db_shop'
+    expose:
+      - 5432
+    networks:
+      - shop_db_net
+    volumes:
+      - db_shop_vol:/var/lib/postgresql/data
+
+  db_store:
+    container_name: db_store
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: 'alex'
+      POSTGRES_PASSWORD: 'admin'
+      POSTGRES_DB: 'db_store'
+    expose:
+      - 5432
+    networks:
+      - store_db_net
+    volumes:
+      - db_store_vol:/var/lib/postgresql/data
+
+networks:
+  shop_db_net:
+  store_db_net:
+
+volumes:
+  db_shop_vol:
+  db_store_vol:

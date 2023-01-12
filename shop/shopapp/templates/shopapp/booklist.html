@@ -1,0 +1,44 @@
+{% extends 'shopapp/base.html' %}
+
+{% block content %}
+
+
+<table class="table table-striped">
+  <tr>
+    <th>Book id</th>
+    <th>Book name</th>
+      <th>Book price</th>
+      <th>Book quantity</th>
+      <th></th>
+  </tr>
+{% for p in object_list %}
+    <tr>
+    <th>{{p.id}}</th>
+    <th>{{p.name}}</th>
+    <th>{{p.price}}</th>
+        <th>{{p.quantity}}</th>
+        <th><button type="button" class="btn btn-warning"><a href="{% url 'shop:book_detail' p.id %}" >Book detail</a></button></th>
+</tr>
+{% endfor %}
+</table>
+<br>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+<br>
+</div>
+{% endblock %}
+

@@ -1,0 +1,26 @@
+{% extends 'shopapp/base.html' %}
+{% block content %}
+{% load cart_tag %}
+
+<table class="table table-striped">
+  <tr>
+    <th>Book name</th>
+      <th>Book price</th>
+      <th>Book quantity</th>
+      <th>Total </th>
+  </tr>
+{% for key,value in request.session.cart.items %}
+    <tr>
+    <th>{{value.name}}</th>
+    <th>{{value.price}}</th>
+        <th><button type="button" class="btn btn-warning"><a href="{% url 'shop:item_increment' value.product_id%}" >+</a></button> {{value.quantity}} <button type="button" class="btn btn-warning">{% if value.quantity == 1 %}<a href="{% url 'shop:item_clear' value.product_id %}" >Delete</a>{% else %}<a href="{% url 'shop:item_decrement' value.product_id %}" >-</a>{% endif %}</button></th>
+        <th>{{ value.price|multiply:value.quantity }}</th>
+
+</tr>
+{% endfor %}
+<a href="{% url 'shop:book_list' %}">Back to Book list</a>
+    <br>
+    <br>
+    <button type="button" class="btn btn-warning"><a href="{% url 'shop:cart_clear' %}" >Clear cart</a></button>
+    <button type="button" class="btn btn-warning"><a href="{% url 'shop:cart_order' %}" >Order</a></button>
+{% endblock %}
