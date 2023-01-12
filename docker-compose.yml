@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: shop.Dockerfile
     env_file:
-      - shop.env
+      - .env
     ports:
       - 8000:8000
     networks:
@@ -18,7 +18,7 @@ services:
       - ./shop:/app
     command: sh runserver.sh
 
-  sklad:
+  store:
     container_name: store
     build:
       context: .
@@ -28,7 +28,7 @@ services:
     networks:
       - store_db_net
     depends_on:
-      - db_sklad
+      - db_store
     volumes:
       - ./store:/app
     command: sh runserver.sh
@@ -37,8 +37,8 @@ services:
     container_name: db_shop
     image: postgres:12-alpine
     environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_USER: 'alex'
+      POSTGRES_PASSWORD: 'admin'
       POSTGRES_DB: 'db_shop'
     expose:
       - 5432
@@ -47,13 +47,13 @@ services:
     volumes:
       - db_shop_vol:/var/lib/postgresql/data
 
-  db_sklad:
+  db_store:
     container_name: db_store
     image: postgres:12-alpine
     environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'postgres'
-      POSTGRES_DB: 'db_sklad'
+      POSTGRES_USER: 'alex'
+      POSTGRES_PASSWORD: 'admin'
+      POSTGRES_DB: 'db_store'
     expose:
       - 5432
     networks:

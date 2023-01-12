@@ -37,7 +37,7 @@ SECRET_KEY = 'DJANGO_SECRET_KEY'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DJANGO_DEBUG'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1", ]
 
 
 # Application definition
@@ -96,8 +96,12 @@ WSGI_APPLICATION = 'shopproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'DB_NAME_SHOP',
+        'USER': 'postgres',
+        'PASSWORD': 'POSTGRES_PASSWORD',
+        'HOST': 'db_shop',
+        'PORT': 5432,
     }
 }
 
