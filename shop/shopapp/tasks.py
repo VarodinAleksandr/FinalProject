@@ -8,7 +8,7 @@ from .models import Book
 
 @shared_task
 def sync_books():
-    r = requests.get('http://127.0.0.1:8001/')
+    r = requests.get('http://0.0.0.0:8001/')
     if r.status_code == 200:
         books = r.json()
         for i in books:
