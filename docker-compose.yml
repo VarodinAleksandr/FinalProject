@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  shop: &shop
+  shop:
     container_name: shop
     build:
       context: .
@@ -93,8 +93,8 @@ services:
     expose:
       - 6379
 
-  rabbitmq:
-    container_name: rabbitmq
+  amqp:
+    container_name: amqp
     image: rabbitmq:3.10.7-management
     restart: on-failure
     ports:
@@ -114,12 +114,11 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
 
   celery_shop:
-    <<: *shop
     container_name: celery
     image: celery:4.0.2
     restart: on-failure
     depends_on:
-      - rabbitmq
+      - amqp
       - redis
       - db_shop
     expose: []
@@ -134,7 +133,7 @@ services:
       DATABASE_PORT: '5432'
       REDIS_URL: 'redis://redis:6379/0'
       REDIS_CACHE: 'redis:6379'
-      AMQP_URL: 'rabbitmq://rabbitmq:5672'
+      AMQP_URL: 'amqp://rabbitmq:5672'
       WEB_HOST: 'shop'
       WEB_PORT: '8000'
 
