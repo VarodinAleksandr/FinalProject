@@ -21,4 +21,4 @@ RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 RUN chmod +x docker-entrypoint.sh /wait-for-command.sh runserver.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["python", "manage.py", "runserver", "127.0.0.1:8001"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8001"]
