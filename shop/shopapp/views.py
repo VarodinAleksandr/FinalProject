@@ -4,6 +4,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 
 from django.views import generic
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 from rest_framework import generics as rest_genetic
 
 from .models import Book, Order, OrderItem
@@ -16,6 +18,7 @@ from cart.cart import Cart
 from .serializer import OrderSerializer
 
 
+@method_decorator(cache_page(5), 'dispatch')
 class BooKListView(generic.ListView):
     model = Book
     template_name = 'shopapp/booklist.html'

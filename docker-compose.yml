@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  shop: &shop
+  shop:
     container_name: shop
     build:
       context: .
@@ -161,20 +161,20 @@ services:
       - 25
       - 8025
 
-#  nginx:
-#    container_name: nginx
-#    build:
-#      context: .
-#      dockerfile: nginx.Dockerfile
-#    restart: on-failure
-#    networks:
-#      - webnet
-#      - nginx_network
-#    ports:
-#      - 8080:80
-#    depends_on:
-#      - shop
-#      - store
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    restart: on-failure
+    networks:
+      - webnet
+      - nginx_network
+    ports:
+      - 8080:80
+    depends_on:
+      - shop
+      - store
 
 networks:
   webnet:
