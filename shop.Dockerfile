@@ -12,13 +12,13 @@ COPY shop app/
 
 WORKDIR app/
 
-EXPOSE 8000
-
 COPY shop/docker-entrypoint.sh /docker-entrypoint.sh
+COPY shop/runserver.sh /runserver.sh
+COPY wait-for-command.sh /wait-for-command.sh
 
-RUN ["chmod", "+x", "/docker-entrypoint.sh"]
+RUN chmod +x /docker-entrypoint.sh /wait-for-command.sh /runserver.sh
 
-RUN chmod +x docker-entrypoint.sh /wait-for-command.sh runserver.sh
+EXPOSE 8000
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
