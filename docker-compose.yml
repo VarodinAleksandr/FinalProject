@@ -10,7 +10,7 @@ services:
       - .env
     environment:
       DJANGO_DEBUG: 1
-      DATABASE_URL: 'postgresql://postgres:alex@shop_db:5432/shop_db'
+      DATABASE_URL: 'postgresql://postgres:alex@db_shop:5432/db_shop'
       DATABASE_HOST: 'db'
     ports:
       - 8000:8000
@@ -34,7 +34,7 @@ services:
       - .env
     environment:
       DJANGO_DEBUG: 1
-      DATABASE_URL: 'postgresql://postgres:postgres@store_db:5432/store_db'
+      DATABASE_URL: 'postgresql://postgres:postgres@db_store:5432/db_store'
       DATABASE_HOST: 'db'
     ports:
       - 8001:8001
