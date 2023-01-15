@@ -10,7 +10,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "shopproject.settings")
 
 django.setup()
 
-app = Celery('shopproject', broker='amqp://localhost', backend='redis://localhost')
+app = Celery('shopproject', broker='amqp://rabbitmq:5672', backend='redis://localhost')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 

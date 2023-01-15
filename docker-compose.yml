@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  shop:
+  shop: &shop
     container_name: shop
     build:
       context: .
@@ -11,7 +11,7 @@ services:
     environment:
       DJANGO_DEBUG: 1
       DATABASE_URL: 'postgresql://postgres:alex@db_shop:5432/db_shop'
-      DATABASE_HOST: 'db'
+      DATABASE_HOST: 'db_shop'
     ports:
       - 8000:8000
     expose:
@@ -19,7 +19,6 @@ services:
     networks:
       - webnet
       - nginx_network
-#      - shop_db_net
     depends_on:
       - db_shop
     volumes:
@@ -36,7 +35,7 @@ services:
     environment:
       DJANGO_DEBUG: 1
       DATABASE_URL: 'postgresql://postgres:postgres@db_store:5432/db_store'
-      DATABASE_HOST: 'db'
+      DATABASE_HOST: 'db_store'
     ports:
       - 8001:8001
     expose:
@@ -63,7 +62,6 @@ services:
     networks:
       - webnet
       - nginx_network
-#      - shop_db_net
     volumes:
       - db_shop_vol:/var/lib/postgresql/data
 
@@ -93,8 +91,8 @@ services:
     expose:
       - 6379
 
-  amqp:
-    container_name: amqp
+  rabbitmq:
+    container_name: rabbitmq
     image: rabbitmq:3.10.7-management
     restart: on-failure
     ports:
@@ -115,17 +113,24 @@ services:
 
   celery_shop:
     container_name: celery
-    image: celery:4.0.2
+    build:
+      context: .
+      dockerfile: shop.Dockerfile
+    volumes:
+      - ./shop:/app
     restart: on-failure
     depends_on:
-      - amqp
+      - rabbitmq
       - redis
       - db_shop
     expose: []
     networks:
       - webnet
       - nginx_network
+    env_file:
+      - .env
     environment:
+      DJANGO_DEBUG: 1
       C_FORCE_ROOT: 'true'
       CHECK_WEB: 'true'
       DATABASE_URL: 'postgresql://postgres:postgres@db_shop:5432/db_shop'
@@ -136,6 +141,7 @@ services:
       AMQP_URL: 'amqp://rabbitmq:5672'
       WEB_HOST: 'shop'
       WEB_PORT: '8000'
+    command: celery -A shopproject worker -B -l INFO
 
   mailhog:
     container_name: mailhog
@@ -155,20 +161,20 @@ services:
       - 25
       - 8025
 
-  nginx:
-    container_name: nginx
-    build:
-      context: .
-      dockerfile: nginx.Dockerfile
-    restart: on-failure
-    networks:
-      - webnet
-      - nginx_network
-    ports:
-      - 80:80
-    depends_on:
-      - shop
-      - store
+#  nginx:
+#    container_name: nginx
+#    build:
+#      context: .
+#      dockerfile: nginx.Dockerfile
+#    restart: on-failure
+#    networks:
+#      - webnet
+#      - nginx_network
+#    ports:
+#      - 8080:80
+#    depends_on:
+#      - shop
+#      - store
 
 networks:
   webnet:
