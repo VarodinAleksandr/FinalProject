@@ -6,19 +6,19 @@ COPY shop/requirements.txt /requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY wait-for-command.sh /
-
 COPY store app/
 
 WORKDIR app/
 
-COPY store/docker-entrypoint.sh /docker-entrypoint.sh
-COPY store/runserver.sh /runserver.sh
-COPY wait-for-command.sh /wait-for-command.sh
+COPY wait-for-command.sh /
+
+COPY store/docker-entrypoint.sh /
+
+COPY store/runserver.sh /
 
 RUN chmod +x /docker-entrypoint.sh /wait-for-command.sh /runserver.sh
 
-EXPOSE 8001
+EXPOSE 8000
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8001"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8001"
