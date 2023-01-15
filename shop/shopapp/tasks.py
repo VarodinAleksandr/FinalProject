@@ -8,7 +8,9 @@ from .models import Book
 
 @shared_task
 def sync_books():
-    r = requests.get('http://0.0.0.0:8001/')
+    r = requests.get('http://store:8001/')
+    print('===============================================')
+    print(r.status_code)
     if r.status_code == 200:
         books = r.json()
         for i in books:
@@ -16,7 +18,9 @@ def sync_books():
                 id_in_store=i['id'],
                 defaults={'name': i['name'], 'price': i['price'], 'quantity': i['quantity'], 'id_in_store': i['id']}
             )
-    print('Success')
+        print('Success')
+    else:
+        print(f'Error {r.status_code}')
     return True
 
 
