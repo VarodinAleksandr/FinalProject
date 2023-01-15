@@ -97,9 +97,9 @@ WSGI_APPLICATION = 'shopproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'DB_NAME_SHOP',
-        'USER': 'postgres',
-        'PASSWORD': 'POSTGRES_PASSWORD',
+        'NAME': 'db_shop',
+        'USER': 'alex',
+        'PASSWORD': 'admin',
         'HOST': 'db_shop',
         'PORT': 5432,
     }
