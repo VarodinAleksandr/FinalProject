@@ -22,10 +22,3 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [
         OrderItemInline,
     ]
-
-
-
-
-
-
-

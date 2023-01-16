@@ -15,4 +15,3 @@ app = Celery('storeproject', broker='amqp://localhost:5673', backend='redis://lo
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.autodiscover_tasks()
-
